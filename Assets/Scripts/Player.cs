@@ -1,14 +1,18 @@
 ﻿//using System;
 //using System.Collections;
 //using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] float acceleration = 10f;
     [SerializeField] float padding = 0.5f;
+    [SerializeField] GameObject playerLaser;
+    [SerializeField] float laserSpeed = 20f;
 
-    private Vector2 motion = new Vector2(0, 0);
+    private Vector2 playerMotion = new Vector2(0, 0);
+    private Vector2 laserMotion = new Vector2(0, 0);
 
     private Camera mainCamera;
 
@@ -23,7 +27,23 @@ public class Player : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
+        laserMotion.y = laserSpeed;
         SetUpBoundaries();
+    }
+
+    private void Update()
+    {
+        Move();
+        Fire();
+    }
+
+    private void Fire()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            GameObject laser = Instantiate(playerLaser, transform.position, Quaternion.identity);
+            laser.GetComponent<Rigidbody2D>().velocity = laserMotion;
+        }
     }
 
     private void SetUpBoundaries()
@@ -40,18 +60,13 @@ public class Player : MonoBehaviour
         return mainCamera.ViewportToWorldPoint(new Vector3(x, y, z));
     }
 
-    private void Update()
-    {
-        Move();
-    }
-
     private void Move()
     {
         float motionX = GetMotion(axisHorizontalName, 0);
         float motionY = GetMotion(axisVerticalName, 1);
-        motion.x = Mathf.Clamp(motionX, minX, maxX);
-        motion.y = Mathf.Clamp(motionY, minY, maxY);
-        transform.position = motion;
+        playerMotion.x = Mathf.Clamp(motionX, minX, maxX);
+        playerMotion.y = Mathf.Clamp(motionY, minY, maxY);
+        transform.position = playerMotion;
     }
 
     private float GetMotion(string axisName, int vectorIndex)
