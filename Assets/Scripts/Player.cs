@@ -2,6 +2,7 @@
 //using System.Collections;
 //using System.Collections.Generic;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -10,11 +11,13 @@ public class Player : MonoBehaviour
     [SerializeField] float padding = 0.5f;
     [SerializeField] GameObject playerLaser;
     [SerializeField] float laserSpeed = 20f;
+    [SerializeField] float firingPeriod = 0.5f;
 
     private Vector2 playerMotion = new Vector2(0, 0);
     private Vector2 laserMotion = new Vector2(0, 0);
 
     private Camera mainCamera;
+    private Coroutine firingCoroutine;
 
     private float minX;
     private float maxX;
@@ -41,8 +44,23 @@ public class Player : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
+            firingCoroutine = StartCoroutine(FireContinuosly());
+        }
+
+        if (Input.GetButtonUp("Fire1"))
+        {
+            StopCoroutine(firingCoroutine);
+        }
+    }
+
+    IEnumerator FireContinuosly()
+    {
+        while (true)
+        {
             GameObject laser = Instantiate(playerLaser, transform.position, Quaternion.identity);
             laser.GetComponent<Rigidbody2D>().velocity = laserMotion;
+
+            yield return new WaitForSeconds(firingPeriod);
         }
     }
 
