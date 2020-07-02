@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour
     private Waveconfig waveConfig;
     private List<Transform> waypoints;
 
+    [SerializeField] float health = 500f;
+
     int waypointIndex = 0;
 
     private void Start()
@@ -33,6 +35,19 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        PlayerLaser playerLaser = collision.gameObject.GetComponent<PlayerLaser>();
+        ProcessHit(playerLaser);
+    }
+
+    private void ProcessHit(PlayerLaser playerLaser)
+    {
+        health -= playerLaser.GetDamage();
+        playerLaser.Hit();
+        if (health <= 0) Destroy(gameObject);
     }
 
     public void SetWaveConfig(Waveconfig waveConfig)
