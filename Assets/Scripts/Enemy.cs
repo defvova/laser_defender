@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,8 +7,16 @@ public class Enemy : MonoBehaviour
 {
     private Waveconfig waveConfig;
     private List<Transform> waypoints;
+    private Vector2 laserMotion = new Vector2(0, 0);
+    private Coroutine firingCoroutine;
 
     [SerializeField] float health = 500f;
+    [SerializeField] float shotCounter;
+    [SerializeField] float minTimeBetweenShots = 0.2f;
+    [SerializeField] float maxTimeBetweenShots = 3f;
+    [SerializeField] GameObject laser;
+    [SerializeField] float laserSpeed = 20f;
+    [SerializeField] float firingPeriod = 0.5f;
 
     int waypointIndex = 0;
 
@@ -15,9 +24,37 @@ public class Enemy : MonoBehaviour
     {
         waypoints = waveConfig.GetWaypoints();
         transform.position = CurrentPosition();
+        ResetShotCounter();
+        laserMotion.y -= laserSpeed;
     }
 
     private void Update()
+    {
+        EnemyWaypoints();
+        CountDownAndShoot();
+    }
+
+    private void ResetShotCounter()
+    {
+        shotCounter = UnityEngine.Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
+    }
+    private void CountDownAndShoot()
+    {
+        shotCounter -= Time.deltaTime;
+        if (shotCounter <= 0f)
+        {
+            Fire();
+            ResetShotCounter();
+        }
+    }
+
+    void Fire()
+    {
+         GameObject newLaser = Instantiate(laser, transform.position, Quaternion.identity);
+         newLaser.GetComponent<Rigidbody2D>().velocity = laserMotion;
+    }
+
+    private void EnemyWaypoints()
     {
         if (waypointIndex <= waypoints.Count - 1)
         {
@@ -39,14 +76,14 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerLaser playerLaser = collision.gameObject.GetComponent<PlayerLaser>();
-        ProcessHit(playerLaser);
+        Laser laser = collision.gameObject.GetComponent<Laser>();
+        if (laser.CompareTag("PlayerLaser")) ProcessHit(laser);
     }
 
-    private void ProcessHit(PlayerLaser playerLaser)
+    private void ProcessHit(Laser laser)
     {
-        health -= playerLaser.GetDamage();
-        playerLaser.Hit();
+        health -= laser.GetDamage();
+        laser.Hit();
         if (health <= 0) Destroy(gameObject);
     }
 

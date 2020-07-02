@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerLaser : MonoBehaviour
+public class Laser : MonoBehaviour
 {
     [SerializeField] float damage = 100f;
 

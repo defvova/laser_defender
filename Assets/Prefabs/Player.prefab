@@ -96,5 +96,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 10
   padding: 0.5
-  playerLaser: {fileID: 8101587405963216871, guid: cc8875f84089bc443acfcbd032a9a24d,
-    type: 3}
+  laser: {fileID: 8101587405963216871, guid: cc8875f84089bc443acfcbd032a9a24d, type: 3}
+  laserSpeed: 20
+  firingPeriod: 0.2
