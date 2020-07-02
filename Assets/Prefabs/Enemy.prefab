@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1347404101564795619}
   - component: {fileID: 5073743810350480825}
   - component: {fileID: 8544316262589181274}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,6 +101,7 @@ MonoBehaviour:
   maxTimeBetweenShots: 3
   laser: {fileID: 8101587405963216871, guid: 98aa4346c9a4cdd4bbbc063e8f0312e1, type: 3}
   laserSpeed: 20
+  firingPeriod: 0.5
 --- !u!58 &8544316262589181274
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -10,7 +10,10 @@ public class Enemy : MonoBehaviour
     private Vector2 laserMotion = new Vector2(0, 0);
     private Coroutine firingCoroutine;
 
+    [Header("Enemy")]
     [SerializeField] float health = 500f;
+
+    [Header("Laser Movement")]
     [SerializeField] float shotCounter;
     [SerializeField] float minTimeBetweenShots = 0.2f;
     [SerializeField] float maxTimeBetweenShots = 3f;
@@ -77,7 +80,8 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Laser laser = collision.gameObject.GetComponent<Laser>();
-        if (laser.CompareTag("PlayerLaser")) ProcessHit(laser);
+        if (!laser) return;
+        ProcessHit(laser);
     }
 
     private void ProcessHit(Laser laser)

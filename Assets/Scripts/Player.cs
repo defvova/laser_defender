@@ -7,8 +7,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Player")]
     [SerializeField] float acceleration = 10f;
     [SerializeField] float padding = 0.5f;
+    [SerializeField] float health = 500f;
+
+    [Header("Laser Movement")]
     [SerializeField] GameObject laser;
     [SerializeField] float laserSpeed = 20f;
     [SerializeField] float firingPeriod = 0.5f;
@@ -38,6 +42,20 @@ public class Player : MonoBehaviour
     {
         Move();
         Fire();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Laser laser = collision.gameObject.GetComponent<Laser>();
+        if (!laser) return;
+        ProcessHit(laser);
+    }
+
+    private void ProcessHit(Laser laser)
+    {
+        health -= laser.GetDamage();
+        laser.Hit();
+        if (health <= 0) Destroy(gameObject);
     }
 
     private void Fire()
