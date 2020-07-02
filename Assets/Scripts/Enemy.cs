@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] Waveconfig waveConfig;
-    List<Transform> waypoints;
-    [SerializeField] float moveSpeed = 2f;
+    private Waveconfig waveConfig;
+    private List<Transform> waypoints;
 
     int waypointIndex = 0;
 
@@ -21,7 +20,7 @@ public class Enemy : MonoBehaviour
         if (waypointIndex <= waypoints.Count - 1)
         {
             Vector2 targetPosition = CurrentPosition();
-            float step = moveSpeed * Time.deltaTime;
+            float step = waveConfig.GetMoveSpeed() * Time.deltaTime;
 
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, step);
 
@@ -34,6 +33,11 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void SetWaveConfig(Waveconfig waveConfig)
+    {
+        this.waveConfig = waveConfig;
     }
 
     private bool IsEnemyArrived(Vector2 targetPosition)
