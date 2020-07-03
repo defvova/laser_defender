@@ -96,8 +96,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 500
-  explosionEffect: {fileID: 3627233467687675621, guid: 9c0a7e10d44c2c54389321e279b8fb13,
+  deathSound: {fileID: 8300000, guid: ef3f9929e04d08b41bf5ab7e54670b5a, type: 3}
+  deathVolume: 1
+  laserSound: {fileID: 8300000, guid: 24693a807d943ae4aa8a8f5280917ef9, type: 3}
+  laserVolume: 0.3
+  explosionEffect: {fileID: 6362875494449482232, guid: 9c0a7e10d44c2c54389321e279b8fb13,
     type: 3}
+  durationOfExplosion: 1
   shotCounter: 0
   minTimeBetweenShots: 0.2
   maxTimeBetweenShots: 3

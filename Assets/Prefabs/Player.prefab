@@ -99,6 +99,10 @@ MonoBehaviour:
   acceleration: 10
   padding: 0.5
   health: 500
+  deathSound: {fileID: 8300000, guid: ef3f9929e04d08b41bf5ab7e54670b5a, type: 3}
+  deathVolume: 1
+  laserSound: {fileID: 8300000, guid: 1a32de23c470a034990e77567ff56597, type: 3}
+  laserVolume: 0.3
   laser: {fileID: 8101587405963216871, guid: cc8875f84089bc443acfcbd032a9a24d, type: 3}
   laserSpeed: 20
   firingPeriod: 0.2

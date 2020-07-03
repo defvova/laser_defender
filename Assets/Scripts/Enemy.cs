@@ -13,6 +13,12 @@ public class Enemy : MonoBehaviour
     [Header("Enemy")]
     [SerializeField] float health = 500f;
 
+    [Header("Sound Effect")]
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] [Range(0, 1)] float deathVolume = 1f;
+    [SerializeField] AudioClip laserSound;
+    [SerializeField] [Range(0, 1)] float laserVolume = 0.3f;
+
     [Header("Explosion Effect")]
     [SerializeField] GameObject explosionEffect;
     [SerializeField] float durationOfExplosion = 1f;
@@ -57,8 +63,9 @@ public class Enemy : MonoBehaviour
 
     void Fire()
     {
-         GameObject newLaser = Instantiate(laser, transform.position, Quaternion.identity);
-         newLaser.GetComponent<Rigidbody2D>().velocity = laserMotion;
+        GameObject newLaser = Instantiate(laser, transform.position, Quaternion.identity);
+        newLaser.GetComponent<Rigidbody2D>().velocity = laserMotion;
+        AudioSource.PlayClipAtPoint(laserSound, Camera.main.transform.position, laserVolume);
     }
 
     private void EnemyWaypoints()
@@ -96,6 +103,7 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
             Instantiate(explosionEffect, transform.position, transform.rotation);
+            AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position, deathVolume);
         }
     }
 
