@@ -13,6 +13,10 @@ public class Enemy : MonoBehaviour
     [Header("Enemy")]
     [SerializeField] float health = 500f;
 
+    [Header("Explosion Effect")]
+    [SerializeField] GameObject explosionEffect;
+    [SerializeField] float durationOfExplosion = 1f;
+
     [Header("Laser Movement")]
     [SerializeField] float shotCounter;
     [SerializeField] float minTimeBetweenShots = 0.2f;
@@ -88,7 +92,11 @@ public class Enemy : MonoBehaviour
     {
         health -= laser.GetDamage();
         laser.Hit();
-        if (health <= 0) Destroy(gameObject);
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+            Instantiate(explosionEffect, transform.position, transform.rotation);
+        }
     }
 
     public void SetWaveConfig(Waveconfig waveConfig)

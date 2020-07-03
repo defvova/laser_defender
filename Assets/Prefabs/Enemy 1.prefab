@@ -96,6 +96,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  explosionEffect: {fileID: 3627233467687675621, guid: 9c0a7e10d44c2c54389321e279b8fb13,
+    type: 3}
   shotCounter: 0
   minTimeBetweenShots: 0.2
   maxTimeBetweenShots: 3
