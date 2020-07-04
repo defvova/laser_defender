@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -61,8 +62,14 @@ public class Player : MonoBehaviour
     {
         health -= laser.GetDamage();
         laser.Hit();
+        Die();
+    }
+
+    private void Die()
+    {
         if (health <= 0)
         {
+            FindObjectOfType<Level>().LoadGameOver();
             Destroy(gameObject);
             AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position, deathVolume);
         }

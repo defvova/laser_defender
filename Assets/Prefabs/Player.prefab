@@ -99,7 +99,7 @@ MonoBehaviour:
   acceleration: 10
   padding: 0.5
   health: 500
-  deathSound: {fileID: 8300000, guid: ef3f9929e04d08b41bf5ab7e54670b5a, type: 3}
+  deathSound: {fileID: 8300000, guid: ad3ea7d0a7b5e264090a13f1cfe987bf, type: 3}
   deathVolume: 1
   laserSound: {fileID: 8300000, guid: 1a32de23c470a034990e77567ff56597, type: 3}
   laserVolume: 0.3
