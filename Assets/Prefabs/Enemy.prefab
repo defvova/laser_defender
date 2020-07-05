@@ -97,6 +97,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 500
+  enemyScore: 300
+  gameSession: {fileID: 1040509200413753000, guid: 8b0694a059617f145babe1765aabff27,
+    type: 3}
   deathSound: {fileID: 8300000, guid: ef3f9929e04d08b41bf5ab7e54670b5a, type: 3}
   deathVolume: 1
   laserSound: {fileID: 8300000, guid: 24693a807d943ae4aa8a8f5280917ef9, type: 3}

@@ -9,9 +9,11 @@ public class Enemy : MonoBehaviour
     private List<Transform> waypoints;
     private Vector2 laserMotion = new Vector2(0, 0);
     private Coroutine firingCoroutine;
+    private GameSession gameSession;
 
     [Header("Enemy")]
     [SerializeField] float health = 500f;
+    [SerializeField] int enemyScore = 150;
 
     [Header("Sound Effect")]
     [SerializeField] AudioClip deathSound;
@@ -36,6 +38,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         waypoints = waveConfig.GetWaypoints();
+        gameSession = FindObjectOfType<GameSession>();
         transform.position = CurrentPosition();
         ResetShotCounter();
         laserMotion.y -= laserSpeed;
@@ -99,8 +102,14 @@ public class Enemy : MonoBehaviour
     {
         health -= laser.GetDamage();
         laser.Hit();
+        Die();
+    }
+
+    private void Die()
+    {
         if (health <= 0)
         {
+            gameSession.AddToScore(enemyScore);
             Destroy(gameObject);
             Instantiate(explosionEffect, transform.position, transform.rotation);
             AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position, deathVolume);
